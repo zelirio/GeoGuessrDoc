@@ -1,0 +1,37 @@
+.label {
+    font-size: 125%;
+    font-weight: 300;
+    flex-shrink: 0;
+    width: 125%;
+}
+
+
+.form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 200px;
+}
+
+.block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.input{
+    margin-left: 1%;
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: rgb(0, 0, 0);
+    font-size: 100%
+}
+.input:focus {
+    border-color: rgb(118, 129, 118)
+  }
+
+
+.title{
+    font-size: 150%
+}
