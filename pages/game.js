@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import H from "../components/H";
 import styles from "../styles/game.module.css";
 import logo from '../public/logo.png';
+import gameImage from '../public/gamePage.jpg';
 import Image from 'next/image';
 
 
@@ -70,15 +71,16 @@ class Game extends React.Component {
             </div>
 
             <div className={styles.right}>
-                <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 <a>
                     <Image
-                        src={logo}
+                        src={gameImage}
+                        className={styles.img}
                         alt="Picture of the author"
                         layout="intrinsic" // required
                         objectFit="contain" // change to suit your needs
-                        width="125%"
-                        height="125%"
+                        width="5000%"
+                        height="5000%"
                     />
                 </a>
             </div>
