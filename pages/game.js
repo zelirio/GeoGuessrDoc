@@ -3,6 +3,8 @@ import React, {Component,useState} from "react";
 import Header from "../components/Header";
 import H from "../components/H";
 import styles from "../styles/game.module.css";
+import logo from '../public/logo.png';
+import Image from 'next/image';
 
 
 class Game extends React.Component {
@@ -33,7 +35,7 @@ class Game extends React.Component {
             
         <Header />
 
-        <div className="">
+        <div className={styles.cols}>
             <div className = {styles.block}>
                 <div className = "">
                     <div className={styles.title}>Create new game</div>
@@ -65,6 +67,20 @@ class Game extends React.Component {
                     <button type="button" onClick={this.handleSubmit}>Join!</button>
                 </div>
                 
+            </div>
+
+            <div className={styles.right}>
+                <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</h4>
+                <a>
+                    <Image
+                        src={logo}
+                        alt="Picture of the author"
+                        layout="intrinsic" // required
+                        objectFit="contain" // change to suit your needs
+                        width="125%"
+                        height="125%"
+                    />
+                </a>
             </div>
 
            

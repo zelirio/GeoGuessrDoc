@@ -18,6 +18,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    min-width: 50%;
+    margin-top: 15%;
 }
 
 .input{
@@ -34,4 +36,13 @@
 
 .title{
     font-size: 150%
+}
+
+.cols {
+    display: flex;
+    flex-direction: row;
+}
+
+.right {
+    margin-top: 5%;
 }
