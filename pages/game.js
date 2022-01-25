@@ -33,7 +33,6 @@ class Game extends React.Component {
       return (
       <div className = "">
         <H/>
-            
         <Header />
 
         <div className={styles.cols}>
@@ -43,7 +42,7 @@ class Game extends React.Component {
                     <form className={styles.form}>
                         <label className={styles.label}>
                             Game Name:
-                            <input className={styles.input} type="text" value={this.state.gameName} name="gameName" onChange={this.handleChange}/>
+                            <input className={styles.input} type="text" value={this.state.gameName} name="gameName" onChange={e => this.handleChange(e)}/>
                         </label>
                         <label className={styles.label}>
                             Number of players:
@@ -54,7 +53,7 @@ class Game extends React.Component {
                             <input className={styles.input} type="text" value={this.state.nbrRounds} name="nbrRounds" onChange={this.handleChange}/>
                         </label>
                     </form>
-                    <button type="button" onClick={this.handleSubmit}>Guess!</button>
+                    <button className={styles.button} type="button" onClick={this.handleSubmit}>Guess!</button>
                 </div>
 
                 <div className="">
@@ -65,7 +64,7 @@ class Game extends React.Component {
                             <input className={styles.input} type="text" value={this.state.url} name="url" onChange={this.handleChange}/>
                         </label>
                     </form>
-                    <button type="button" onClick={this.handleSubmit}>Join!</button>
+                    <button className={styles.button} type="button" onClick={this.handleSubmit}>Join!</button>
                 </div>
                 
             </div>
