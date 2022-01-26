@@ -47,7 +47,7 @@ class Header extends React.Component {
                     </label>
                     <label className={styles.label}>
                         Password:
-                        <input className={styles.input} type="text" value={this.state.url} name="password" onChange={this.handleChange}/>
+                        <input className={styles.input} type="password" value={this.state.url} name="password" onChange={this.handleChange}/>
                     </label>
                 </form>
 
@@ -68,11 +68,11 @@ class Header extends React.Component {
                     </label>
                     <label className={styles.label}>
                         Password:
-                        <input className={styles.input} type="text" value={this.state.url} name="password" onChange={this.handleChange}/>
+                        <input className={styles.input} type="password" value={this.state.url} name="password" onChange={this.handleChange}/>
                     </label>
                     <label className={styles.label}>
                         Confirm Password:
-                        <input className={styles.input} type="text" value={this.state.url} name="confirm" onChange={this.handleChange}/>
+                        <input className={styles.input} type="password" value={this.state.url} name="confirm" onChange={this.handleChange}/>
                     </label>
                 </form>
 
