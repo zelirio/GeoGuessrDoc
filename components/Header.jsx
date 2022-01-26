@@ -3,18 +3,41 @@ import Link from 'next/link';
 import Image from 'next/image';
 import logo from '../public/logo.png';
 import styles from './Header.module.css'
+import {API_URL} from "../index.ts";
+import {getCookies, setCookies} from 'cookies-next';
+import { getCookie } from 'cookies-next';;
+//import Popup from "./Popup";
+
 
 class Header extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {isOpen: false, in: false, up: false, name: "", password: "", confirm: ""};
+        this.state = {isOpen: false, in: false, up: false, name: "", password: "", confirm: "", isLogin: false};
         this.togglePopup = this.togglePopup.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.register = this.register.bind(this);
+        this.login = this.login.bind(this);
 
     }
 
+    async test(username, password){
+
+        let apiRes = await fetch(`${API_URL}/login`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "username": username,
+                "password": password
+            })
+        })
+        let data = await apiRes.json()
+        console.log(data)
+    }
+    
     Popup(props) {
         return (
             <div className={styles.popupBox}>
@@ -51,7 +74,7 @@ class Header extends React.Component {
                     </label>
                 </form>
 
-                <button className={styles.sign} type="button" onClick={this.handleSubmit}>Sign!</button>
+                <button className={styles.sign} type="button" onClick={this.login}>Sign!</button>
             </div>
         );
     }
@@ -76,7 +99,7 @@ class Header extends React.Component {
                     </label>
                 </form>
 
-                <button className={styles.sign} type="button" onClick={this.handleSubmit}>Sign!</button>
+                <button className={styles.sign} type="button" onClick={this.register}>Sign!</button>
             </div>
         );
     }
@@ -92,12 +115,71 @@ class Header extends React.Component {
             })
         }
         console.log(this.state)
+        console.log(API_URL)
+        //this.test("lylian","qqqqq")
     }
     
     handleSubmit(evt){
         console.log(this.state)
         console.log("coucou")
     }
+
+    async register(){
+
+        let username = this.state.name;
+        let password = this.state.password;
+        let confirm = this.state.confirm;
+
+        if(password != confirm){
+            console.log("nope")
+        }
+        else{
+            let apiRes = await fetch(`${API_URL}/register`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "username": username,
+                    "password": password
+                })
+            })
+            let data = await apiRes.json()
+            console.log(data)
+            this.state.isLogin = true
+            this.togglePopup("")           
+        }
+    }
+    
+    async login(){
+
+        let username = this.state.name;
+        let password = this.state.password;
+        
+        
+        console.log(getCookies("user"));
+
+        let apiRes = await fetch(`${API_URL}/login`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                 Cookie : "kjlohnm"
+            },
+            body: JSON.stringify({
+                "username": username,
+                "password": password
+            })
+        })
+        let data = await apiRes.json()
+        console.log(data)
+        this.state.isLogin = true
+        this.togglePopup("")
+        if(data["message"] == "success"){
+            
+        }
+          
+    }
+
 
     handleChange(event) {
         this.setState({
@@ -141,14 +223,19 @@ class Header extends React.Component {
             </div>
             
             {/* Right side*/}
-            <div className={styles.right}>
-                <button className={styles.button} id={1} onClick={() => this.togglePopup("in")}>
-                    <a className={styles.a}>Sign In</a>
-                </button>
-                <button className={styles.button} id={2} onClick={() => this.togglePopup("up")}>
-                    <a className={styles.a}>Sign up</a>
-                </button>
-            </div>
+            {this.state.isLogin && <div className={styles.right}>
+                logged In Bro
+                </div>}
+            {    
+                !this.state.isLogin && <div className={styles.right}>
+                    <button className={styles.button} id={1} onClick={() => this.togglePopup("in")}>
+                        <a className={styles.a}>Sign In</a>
+                    </button>
+                    <button className={styles.button} id={2} onClick={() => this.togglePopup("up")}>
+                        <a className={styles.a}>Sign up</a>
+                    </button>
+                </div>
+            }
 
             
 

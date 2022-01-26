@@ -1,6 +1,8 @@
 import sqlite3
 import hashlib
 
+from fastapi import Query
+
 class Database:
     def __init__(self) -> None:
         self.con = sqlite3.connect("GeoGuessrDoc.db")
@@ -15,6 +17,7 @@ class Database:
 
         cur.execute(query)
         self.con.commit
+        
     def user_exist(self,user):
         cur = self.con.cursor()
         query = """SELECT * FROM users
@@ -28,7 +31,18 @@ class Database:
         else:
             return True
 
-
+    def user_auth(self,user,password):
+        hash = hashlib.sha256(password.encode()).hexdigest()
+        cur = self.con.cursor()
+        query = """SELECT * FROM users
+            WHERE username is ? AND password = ?
+        """
+        param = (user,hash)
+        data = cur.execute(query,param).fetchall()
+        if len(data) == 0:
+            return False
+        else:
+            return True
 
     def register(self,user,password):
         hash = hashlib.sha256(password.encode()).hexdigest()

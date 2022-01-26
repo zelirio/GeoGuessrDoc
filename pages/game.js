@@ -17,6 +17,8 @@ class Game extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
+
+
     handleSubmit(evt){
         console.log(this.state)
         console.log("coucou")
@@ -46,11 +48,11 @@ class Game extends React.Component {
                         </label>
                         <label className={styles.label}>
                             Number of players:
-                            <input className={styles.input} type="text" value={this.state.nbrPlayers} name="nbrPlayers" onChange={this.handleChange}/>
+                            <input className={styles.input} type="number" value={this.state.nbrPlayers} min={1} max={10} name="nbrPlayers" onChange={this.handleChange}/>
                         </label>
                         <label className={styles.label}>
                             Number of rounds:
-                            <input className={styles.input} type="text" value={this.state.nbrRounds} name="nbrRounds" onChange={this.handleChange}/>
+                            <input className={styles.input} type="number" value={this.state.nbrRounds} min={1} max={5} name="nbrRounds" onChange={this.handleChange}/>
                         </label>
                     </form>
                     <button className={styles.button} type="button" onClick={this.handleSubmit}>Guess!</button>
