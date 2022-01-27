@@ -4,9 +4,7 @@ import Image from 'next/image';
 import logo from '../public/logo.png';
 import styles from './Header.module.css'
 import {API_URL} from "../index.ts";
-import {getCookies, setCookies} from 'cookies-next';
-import { getCookie } from 'cookies-next';;
-//import Popup from "./Popup";
+
 
 
 class Header extends React.Component {
@@ -19,6 +17,7 @@ class Header extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.register = this.register.bind(this);
         this.login = this.login.bind(this);
+        this.getName();
 
     }
 
@@ -66,7 +65,7 @@ class Header extends React.Component {
                 <form className={styles.form}>
                     <label className={styles.label}>
                         Name:
-                        <input className={styles.input} type="text" value={this.state.url} name="name" onChange={this.handleChange}/>
+                        <input className={styles.input} type="text" value={this.state.url} name="name" maxLength={10} onChange={this.handleChange}/>
                     </label>
                     <label className={styles.label}>
                         Password:
@@ -87,7 +86,7 @@ class Header extends React.Component {
                 <form className={styles.form}>
                     <label className={styles.label}>
                         Name:
-                        <input className={styles.input} type="text" value={this.state.url} name="name" onChange={this.handleChange}/>
+                        <input className={styles.input} type="text" value={this.state.url} name="name" maxLength={10} onChange={this.handleChange}/>
                     </label>
                     <label className={styles.label}>
                         Password:
@@ -146,38 +145,41 @@ class Header extends React.Component {
             })
             let data = await apiRes.json()
             console.log(data)
-            this.state.isLogin = true
-            this.togglePopup("")           
+            this.togglePopup("")   
+            if(data["message"] == "success"){
+                sessionStorage.setItem("user",username)
+                sessionStorage.setItem("token",data["token"])
+            }
+            this.getName();            
         }
     }
     
-    async login(){
+    async login() {
 
         let username = this.state.name;
         let password = this.state.password;
-        
-        
-        console.log(getCookies("user"));
 
-        let apiRes = await fetch(`${API_URL}/login`,{
+        console.log();
+
+        let apiRes =  await fetch(`${API_URL}/login`,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                 Cookie : "kjlohnm"
             },
             body: JSON.stringify({
                 "username": username,
                 "password": password
             })
         })
-        let data = await apiRes.json()
+        let data =  await apiRes.json()  
         console.log(data)
         this.state.isLogin = true
         this.togglePopup("")
         if(data["message"] == "success"){
-            
+            sessionStorage.setItem("user",username)
+            sessionStorage.setItem("token",data["token"])
         }
-          
+        this.getName();    
     }
 
 
@@ -188,8 +190,16 @@ class Header extends React.Component {
         console.log(this.state)
     }
 
-
+   
+    async getName(){
+        let name = await sessionStorage.getItem("user");
+        this.setState({["username"]:name})
+        console.log(this.state)
+    }
     render() {
+
+    //let name = this.getName(); 
+    
     return (
         <div>
         <div className={styles.line}>
@@ -223,11 +233,11 @@ class Header extends React.Component {
             </div>
             
             {/* Right side*/}
-            {this.state.isLogin && <div className={styles.right}>
-                logged In Bro
+            
+            {this.state.username != null  && <div className={styles.user}>
+                     Hello {this.state.username}
                 </div>}
-            {    
-                !this.state.isLogin && <div className={styles.right}>
+            {this.state.username == null && <div className={styles.right}>
                     <button className={styles.button} id={1} onClick={() => this.togglePopup("in")}>
                         <a className={styles.a}>Sign In</a>
                     </button>

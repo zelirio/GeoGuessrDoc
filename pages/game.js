@@ -6,7 +6,9 @@ import styles from "../styles/game.module.css";
 import logo from '../public/logo.png';
 import gameImage from '../public/gamePage.jpg';
 import Image from 'next/image';
-
+import Router from "next/router";
+import { useRouter } from 'next/router'
+import {API_URL} from "../index.ts";
 
 class Game extends React.Component {
 
@@ -19,9 +21,50 @@ class Game extends React.Component {
 
 
 
-    handleSubmit(evt){
+    async handleSubmit(){
+        await this.getName()
+        await this.getJwt()
         console.log(this.state)
-        console.log("coucou")
+        let gameName = this.state.gameName;
+        let nbrPlayers = this.state.nbrPlayers;
+        let nbrRounds = this.state.nbrRounds;
+        let name = await this.state.username;
+        let jwt = await this.state.jwt;
+
+        let apiRes = await fetch(`${API_URL}/create`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "gameName": gameName,
+                "nbrPlayers": nbrPlayers,
+                "nbrRounds": nbrRounds,
+                "username" : name,
+                "jwt": jwt
+            })
+        })
+        let data = await apiRes.json()
+        console.log(data)
+        if(data.message == "success"){
+            const router = useRouter()
+            const url = "/lobby/" + data["url"]
+            router.push(url)
+        }
+        else{
+            console.log("va te faire mettre")
+        }
+    }
+    
+    async getJwt(){
+        let jwt = await sessionStorage.getItem("token");
+        this.setState({["jwt"]:jwt})
+        console.log(this.state)
+    }
+    async getName(){
+        let name = await sessionStorage.getItem("user");
+        this.setState({["username"]:name})
+        console.log(this.state)
     }
 
     handleChange(event) {
@@ -36,7 +79,6 @@ class Game extends React.Component {
       <div className = "">
         <H/>
         <Header />
-
         <div className={styles.cols}>
             <div className = {styles.block}>
                 <div className = "">
@@ -48,7 +90,7 @@ class Game extends React.Component {
                         </label>
                         <label className={styles.label}>
                             Number of players:
-                            <input className={styles.input} type="number" value={this.state.nbrPlayers} min={1} max={10} name="nbrPlayers" onChange={this.handleChange}/>
+                            <input className={styles.input} type="number" value={this.state.nbrPlayers} min={1} max={9} maxLength={1} name="nbrPlayers" onChange={this.handleChange}/>
                         </label>
                         <label className={styles.label}>
                             Number of rounds:
@@ -85,9 +127,6 @@ class Game extends React.Component {
                     />
                 </a>
             </div>
-
-           
-
         </div>
       </div>
       );
