@@ -48,6 +48,7 @@
 
 
 
+
 .a:after {
     background: none repeat scroll 0 0 transparent;
     bottom: 1;
@@ -156,15 +157,45 @@
     color: white;
   }
 
-  .user{
+.user{
     text-align: center;
     margin : 0%;
     font-size: 200%;
     flex-shrink: 0;
     margin-top: 3.3%;
-    margin-right: 10%;
+    margin-right: 12%;
     text-decoration: none;
     display: inline-block;
     position: relative;
+  }
+.logoutBut{
+    width: 50%;
+    height: 50%;
+    background: none;
+    border: 0px solid #fafafa00;
+    text-align: center;
 
+}
+
+.logoutBut:before{
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    width: 140px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 0;
+    transition: opacity 1s ease-in-out;
+    position: absolute;
+    z-index: 1;
+    margin-top: 50%;
+    left:-25%
+    
+    }
+
+.logoutBut:hover:before {
+    opacity: 1;
+    visibility: visible;
   }

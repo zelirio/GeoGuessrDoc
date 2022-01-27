@@ -4,7 +4,7 @@ import Image from 'next/image';
 import logo from '../public/logo.png';
 import styles from './Header.module.css'
 import {API_URL} from "../index.ts";
-
+import {  LogoutIcon } from '@heroicons/react/outline'
 
 
 class Header extends React.Component {
@@ -190,7 +190,11 @@ class Header extends React.Component {
         console.log(this.state)
     }
 
-   
+    disconnect(){
+        this.setState({["username"]:null,["token"]:null})
+        sessionStorage.removeItem("user")
+        sessionStorage.removeItem("token")
+    }
     async getName(){
         let name = await sessionStorage.getItem("user");
         this.setState({["username"]:name})
@@ -236,6 +240,13 @@ class Header extends React.Component {
             
             {this.state.username != null  && <div className={styles.user}>
                      Hello {this.state.username}
+                    <button className={styles.logoutBut} data-hover = "Disconnect" onClick={() => this.disconnect()}>
+                        <LogoutIcon className={styles.logout}  />
+                    </button>
+                
+                        
+                    
+                      
                 </div>}
             {this.state.username == null && <div className={styles.right}>
                     <button className={styles.button} id={1} onClick={() => this.togglePopup("in")}>
