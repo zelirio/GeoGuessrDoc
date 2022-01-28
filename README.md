@@ -9,7 +9,7 @@ Developed by :
 <ul>
   <li>Brunei Lylian (fullstack) </li>
   <li>De Bod Sébastien (fullstack) </li> 
-  <li>Tellier Diego (Design figma & frontend)</li> 
+  <li>Tellier Diego (Design Figma & frontend)</li> 
 <//ul>
 
 # GeoGuessrDoc
