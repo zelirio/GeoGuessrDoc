@@ -159,7 +159,7 @@ class Header extends React.Component {
         let username = this.state.name;
         let password = this.state.password;
 
-        console.log();
+    
 
         let apiRes =  await fetch(`${API_URL}/login`,{
             method: 'POST',
@@ -231,7 +231,7 @@ class Header extends React.Component {
                     <a className={styles.a}>Game</a>
                 </Link>
                 <Link href="/Contact">
-                    <a className={styles.a}>Contact Us</a>
+                    <a className={styles.a}>History</a>
                 </Link>
 
             </div>

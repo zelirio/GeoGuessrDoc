@@ -47,9 +47,8 @@ class Game extends React.Component {
         let data = await apiRes.json()
         console.log(data)
         if(data.message == "success"){
-            const router = useRouter()
             const url = "/lobby/" + data["url"]
-            router.push(url)
+            Router.push(url)
         }
         else{
             console.log("va te faire mettre")

@@ -1,0 +1,29 @@
+.tableau{
+    display: flex;
+    flex-direction: row;
+    font-family: "Oswald";
+    font-weight: bolder;
+    width: 40vw;
+}
+
+.name{
+    color: #dd1519;
+    width: 100px;
+    margin-left: 3vw;
+}
+
+.score{
+    margin-right: 3vw;
+    text-decoration: underline;
+    text-underline-offset: 10px;
+    
+}
+
+.line{
+   
+    height: 50px;
+    width: 2px;
+    background-color: #ff0004;
+    margin-right: 2vw;
+    
+}

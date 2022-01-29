@@ -101,31 +101,46 @@ class Database:
             url TEXT PRIMARY KEY,
             name VARCHAR(20),
             nbrRounds INTEGER,
+            nbrPlayersMax INTEGER,
             nbrPlayers INTEGER
         )"""
         cur.execute(query)
         self.con.commit()
-    
+    def select_game(self,url):
+        cur = self.con.cursor()
+        query = """SELECT name, nbrRounds, nbrPlayersMax,nbrPlayers FROM games
+        WHERE url = ?"""
+        param = (url,)
+        return cur.execute(query,param).fetchall()
     def insert_game(self,url,name,nbrRounds,nbrPlayers):
         cur = self.con.cursor()
         query = """INSERT INTO games(
             url,
             name,
             nbrRounds,
+            nbrPlayersMax,
             nbrPlayers
             ) VALUES(
                 ?,
                 ?,
                 ?,
+                ?,
                 ?
             )"""
-        param = (url,name,nbrRounds,nbrPlayers)
+        param = (url,name,nbrRounds,nbrPlayers,0)
         cur.execute(query,param)
         self.con.commit()
     
-
-        
-
+    def update_game(self,nbrPlayers):
+        cur =  self.con.cursor()
+        query = """UPDATE games(
+            nbrPlayers 
+            )SET
+            (?)
+            """
+        param = (nbrPlayers,)
+        cur.execute(query,param)
+        self.con.commit()
 
     def create_table_manches(self):
         cur = self.con.cursor()
@@ -143,17 +158,25 @@ class Database:
         )"""
         cur.execute(query)
         self.con.commit()
-
-    def select_game(self,url):
+    def select_all_manches(self,url):
         cur = self.con.cursor()
         query = """SELECT username,score ,mancheNumber ,roundNumber FROM manches 
         WHERE url = ?"""
         param = (url,)
-        return cur.execute(query,param)
-    
+        
+        return cur.execute(query,param).fetchall()
+        
+    def select_one_round(self, url, roundID):
+        cur = self.con.cursor()
+        query = """SELECT username,score ,mancheNumber  FROM manches 
+        WHERE url = ? AND roundNumber = ?"""
+        param = (url,roundID)
+
+        return cur.execute(query,param).fetchall()
+
     def insert_manche(self, roundNumber, score, mancheNumber, username, url):
         cur = self.con.cursor()
-        query = """ INSERT INTO manche(
+        query = """ INSERT INTO manches(
             roundNumber, 
             score, 
             mancheNumber, 
@@ -163,7 +186,7 @@ class Database:
                 ?,
                 ?,
                 ?,
-                ?,
+                ?
             )       
          """
         params = (roundNumber, score, mancheNumber, username, url)
@@ -172,7 +195,7 @@ class Database:
 
     def update_manche(self, roundNumber, score, mancheNumber, username, url):
         cur = self.con.cursor()
-        query = """ UPDATE manche(
+        query = """ UPDATE manches(
             roundNumber, 
             score, 
             mancheNumber, 
@@ -182,7 +205,7 @@ class Database:
                 ?,
                 ?,
                 ?,
-                ?,
+                ?
             )       
          """
         params = (roundNumber, score, mancheNumber, username, url)
@@ -192,5 +215,7 @@ class Database:
     def _select_all(self):
         query = "SELECT * FROM users;"
         return self.con.cursor().execute(query).fetchall()
-
+    def _select_all_manches(self):
+        query = "SELECT * FROM manches;"
+        return self.con.cursor().execute(query).fetchall()
        
